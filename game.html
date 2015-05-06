@@ -3125,7 +3125,7 @@ Elm.Main.make = function (_elm) {
    var funzioneTunnel = function (n) {
       return function () {
          var x = n / 400;
-         return (2 * $Basics.sin(x) + $Basics.sin(2 * (x + 20))) / 3;
+         return (2 * $Basics.sin(x) + $Basics.sin(1.1 * (x + 20)) + $Basics.sin(2 * (x + 20))) / 4;
       }();
    };
    var pointsText = function (_v0) {
@@ -3205,7 +3205,7 @@ Elm.Main.make = function (_elm) {
                                 larghezzaGioco / 2 - _v6._1,
                                 grandezzaPezzo)))]);}
          _U.badCase($moduleName,
-         "between lines 118 and 119");
+         "between lines 119 and 120");
       }();
    };
    var tunnelPieceForm = function (n) {
@@ -3240,13 +3240,10 @@ Elm.Main.make = function (_elm) {
       Dead) ? $Graphics$Collage.toForm(A3($Graphics$Element.image,
       128,
       128,
-      "https://i.imgur.com/kjWMcC8.jpg")) : A2($Graphics$Collage.rotate,
-      $Basics.degrees(-30),
-      A2($Graphics$Collage.filled,
-      $Color.red,
-      A2($Graphics$Collage.ngon,
-      3,
-      10))));
+      "https://i.imgur.com/kjWMcC8.jpg")) : $Graphics$Collage.toForm(A3($Graphics$Element.image,
+      32,
+      32,
+      "player.png")));
    };
    var campo = F2(function (tun,
    player) {

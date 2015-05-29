@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Programmazione funzionale in Haskell e Elm</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+	<!-- Code syntax highlighting -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement( 'link' );
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
+	<!--[if lt IE 9]>
+	<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+
+<body><div class="reveal">
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+
+<section>
+	<h1>Programmazione funzionale</h1>
+	<h3>in Haskell e Elm</h3>
+	<p>
+		<small>Di <a href="http://fgaz.github.io">Francesco Gazzetta</a></small>
+	</p>
+</section>
+
+<!-- ~things~ -->
+<section>
+	<section>
+		<h2>Definizione</h2>
+		<p>Qui ci va una definizione paurosa della programmazione funzionale</p>
+	</section>
+	<section>
+		<h2>Robaccia varia con le operazioni fondamentali e qualche altra funzione qui</h2>
+	</section>
+</section>
+
+<!-- fibonacci qui -->
+<section>
+	<h2>Qui qualcosa sulla funzione fibonacci</h2>
+</section>
+
+<section>
+	<section>
+		<h2>Le liste</h2>
+		<pre><code data-trim class="hljs haskell">
+			[1,2,10,2,666] :: [Int]
+		</code></pre>
+		<p>
+			Insiemi ordinati di elementi dello stesso tipo
+		</p>
+		<p>
+			Una lista può essere:
+		</p>
+			<ul>
+				<li>una lista vuota (<pre style="display:inline"><code style="display:inline" class="hljs haskell">[]</code></pre>)
+				<li>un elemento più una lista (<pre style="display:inline"><code style="display:inline" class="hljs haskell">2:[]</code></pre>)</li>
+			</ul>
+		<p>
+			Tutte le altre liste si ricavano da questo:
+			<pre><code data-trim class="hljs haskell">
+2:(6:(8:[])) è uguale a [2,6,8]
+			</code></pre>
+		</p>
+	</section>
+	<section>
+		<h3>Roba che si può fare con le liste</h3>
+		<pre><code data-trim class="hljs haskell">
+head ["lol","lel","trolol"] --testa (primo elem.)
+"lol"
+
+tail "gufo" --coda
+"ufo" --Le stringhe sono liste di caratteri!
+
+[1,4,6,8] !! 3 --selezione di un elemento
+6
+
+[1,2] ++ [10,666] --unione
+[1,2,10,666]
+
+[1..20] --range
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+		</code></pre>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>map</h2>
+		<pre><code data-trim class="hljs haskell">
+			map :: (a -> b) -> [a] -> [b]
+		</code></pre>
+		<p class="fragment">Applica una funzione a ogni elemento della lista</p>
+	</section>
+	<section>
+		<h3>Definizione</h3>
+		<pre><code class="haskell" contenteditable>
+map _ [] = _
+map f (testa:coda) = _
+		</code></pre>
+	</section>
+	<section>
+		<h3>Esempi</h3>
+		<pre><code class="haskell" data-trim>
+> map succ [1,5,2]
+[2,6,3]
+> let f x = x*2 in map f [1,2,3]
+[2,4,6]
+> map (*3) [0,2,10]
+[0,6,30]
+		</code></pre>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>fold</h2>
+		<pre><code data-trim class="hljs haskell">
+			foldl :: _
+		</code></pre>
+		<p class="fragment">Riduce una lista a un solo elemento</p>
+	</section>
+	<section>
+		<h3>Definizione</h3>
+		<pre><code class="haskell" contenteditable>
+foldl f accum (testa:coda) = _
+		</code></pre>
+	</section>
+	<section>
+		<h3>Esempi</h3>
+		<pre><code class="haskell" data-trim>
+> map id [1,2,3]
+[1,2,3]
+> let f x = x*2 in map f [1,2,3]
+[2,4,6]
+> map (*3) [0,2,10]
+[0,6,30]
+		</code></pre>
+	</section>
+</section>
+
+
+<!-- Programmazione reattiva -->
+<section>
+	<h2>Programmazione reattiva</h2>
+	<p>Definizione brutale qui</p>
+</section>
+<section>
+	<section data-background="assets/mario_walking.jpg">
+		<h2>Un semplice gioco</h2>
+	</section>
+	<section>
+		<h2>Dal tempo allo schermo</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Tempo</th>
+					<th>Tasto premuto</th>
+					<th class="fragment">Immagine del giocatore</th>
+					<th class="fragment">Posizione giocatore</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>0</td>
+					<td>No</td>
+					<td class="fragment">mario_fermo.png</td>
+					<td class="fragment">0</td>
+				<tr>
+				<tr>
+					<td>1</td>
+					<td>Sì</td>
+					<td class="fragment">mario_che_cammina.png</td>
+					<td class="fragment">1</td>
+				<tr>
+				<tr>
+					<td>2</td>
+					<td>Sì</td>
+					<td class="fragment">mario_che_cammina.png</td>
+					<td class="fragment">2</td>
+				<tr>
+				<tr>
+					<td>3</td>
+					<td>No</td>
+					<td class="fragment">mario_fermo.png</td>
+					<td class="fragment">2</td>
+				<tr>
+			</tbody>
+		</table>
+	</section>
+	<section>
+		<h3>Valori in funzione del tempo</h3>
+		<pre><code class="haskell" data-trim>
+scegliImmagine :: Input -> NomeImmagine
+scegliImmagine TastoPremuto    = "mario_che_cammina.jpg"
+scegliImmagine TastoNonPremuto = "mario_fermo.jpg"
+
+immaginiDaMostrare :: [NomeImmagine]
+immaginiDaMostrare = map scegliImmagine inputs --Chi si rivede...
+		</code></pre>
+	</section>
+	<section>
+		<h3>Gestire uno stato</h3>
+		<pre><code class="haskell" data-trim>
+roba con fold
+		</code></pre>
+	</section>
+</section>
+
+
+
+</div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+	// Full list of configuration options available at:
+	// https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+		transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+		// Optional reveal.js plugins
+		dependencies: [
+			{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+			{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+			{ src: 'plugin/zoom-js/zoom.js', async: true },
+			{ src: 'plugin/notes/notes.js', async: true }
+		]
+	});
+</script>
+
+</body>
+
+</html>

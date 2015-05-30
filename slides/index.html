@@ -127,6 +127,8 @@ map f (testa:coda) = _
 [2,6,3]
 > let f x = x*2 in map f [1,2,3]
 [2,4,6]
+> map (\x -> x*2) [1,2,3]
+[2,4,6]
 > map (*3) [0,2,10]
 [0,6,30]
 		</code></pre>
@@ -137,25 +139,24 @@ map f (testa:coda) = _
 	<section>
 		<h2>fold</h2>
 		<pre><code data-trim class="hljs haskell">
-			foldl :: _
+foldl :: (a -> b -> a) -> a -> [b] -> a
 		</code></pre>
 		<p class="fragment">Riduce una lista a un solo elemento</p>
 	</section>
 	<section>
 		<h3>Definizione</h3>
 		<pre><code class="haskell" contenteditable>
+foldl _ accum [] = accum
 foldl f accum (testa:coda) = _
 		</code></pre>
 	</section>
 	<section>
 		<h3>Esempi</h3>
 		<pre><code class="haskell" data-trim>
-> map id [1,2,3]
-[1,2,3]
-> let f x = x*2 in map f [1,2,3]
-[2,4,6]
-> map (*3) [0,2,10]
-[0,6,30]
+> foldl (+) 0 [2,3,5]
+10
+> sum xs = foldl (+) 0 xs
+--altra roba da aggiungere
 		</code></pre>
 	</section>
 </section>
@@ -223,7 +224,11 @@ immaginiDaMostrare = map scegliImmagine inputs --Chi si rivede...
 	<section>
 		<h3>Gestire uno stato</h3>
 		<pre><code class="haskell" data-trim>
-roba con fold
+posizioneIniziale :: Int
+posizioneIniziale = 0
+
+posizioneGiocatore :: Int
+posizioneGiocatore = foldl (\accum x -> if x==TastoPremuto then accum+1 else accum) posizioneIniziale inputs
 		</code></pre>
 	</section>
 </section>

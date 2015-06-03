@@ -50,18 +50,97 @@
 	<section>
 		<h2>Definizione</h2>
 		<blockquote>
-			 La programmazione funzionale è un paradigma di programmazione in cui il flusso di esecuzione del programma assume la forma di una serie di valutazioni di funzioni matematiche
-			 <br>-Wikipedia
+			 <span class="fragment fade-out" data-fragment-index="2">La programmazione funzionale è un paradigma di programmazione in cui il flusso di esecuzione del programma assume la forma di una serie di</span> <span class="fragment highlight-blue" data-fragment-index="2">valutazioni di funzioni matematiche</span>
+			 <br><span class="fragment fade-out" data-fragment-index="2">-Wikipedia</span>
 		</blockquote>
+		<h1 class="fragment current-visible" data-fragment-index="1">
+			WTF?!?
+		</h1>
 	</section>
 	<section>
-		<h2>Robaccia varia con le operazioni fondamentali e qualche altra funzione qui</h2>
+		<pre><code data-trim class="hljs haskell">
+ghci> 2 + 15  
+17  
+ghci> 49 * 100  
+4900  
+ghci> 1892 - 1472  
+420  
+ghci> 5 / 2  
+2.5  
+ghci>  
+		</code></pre>
+	</section>
+	<section>
+		<pre><code data-trim class="hljs haskell">
+ghci> (50 * 100) - 4999  
+1  
+ghci> 50 * 100 - 4999  
+1  
+ghci> 50 * (100 - 4999)  
+-244950  
+		</code></pre>
+	</section>
+	<section>
+		<pre><code data-trim class="hljs haskell">
+ghci> True && False  
+False  
+ghci> True && True  
+True  
+ghci> False || True  
+True   
+ghci> not False  
+True  
+ghci> not (True && True)  
+False  
+		</code></pre>
+	</section>
+	<section>
+		<pre><code data-trim class="hljs haskell">
+ghci> 5 == 5  
+True  
+ghci> 1 == 0  
+False  
+ghci> 5 /= 5  
+False  
+ghci> 5 /= 4  
+True  
+ghci> "hello" == "hello"  
+True    
+		</code></pre>
+	</section>
+</section>
+
+
+<section>
+	<section>
+		<h2>Funzioni</h2>
 	</section>
 </section>
 
 <!-- fibonacci qui -->
 <section>
-	<h2>Qui qualcosa sulla funzione fibonacci</h2>
+	<h2>Ricorsione</h2>
+	<pre><code data-trim class="hljs haskell">
+fibonacci 0 = 0
+fibonacci 1 = 1
+fibonacci n = fib (n-1) + fib (n-2)
+	</code></pre>
+</section>
+
+<section>
+		<h2>Trasparenza referenziale</h2>
+		<p>
+			Una funzione, dato lo stesso input, restituirà sempre lo stesso output.
+		</p>
+		<p class="fragment">
+			In altre parole, 2+2 fa sempre 4.
+		</p>
+</section>
+
+<section>
+	<h2>
+		Organizzare i dati
+	</h2>
 </section>
 
 <section>
@@ -104,6 +183,55 @@ tail "gufo" --coda
 
 [1..20] --range
 [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+
+length [4,3,5,6] --lunghezza
+4
+		</code></pre>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>Le tuple</h2>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>I tipi</h2>
+	</section>
+	<section>
+		<h3>Tipi semplici</h3>
+		<pre><code data-trim class="hljs haskell">
+1 :: Int
+'a' :: Char
+"abcd" :: String --questo in realtà non lo è
+
+		</code></pre>
+	</section>
+	<section>
+		<h3>Tipi astratti</h3>
+		<pre><code data-trim class="hljs haskell">
+1 :: Int
+		</code></pre>
+	</section>
+	<section>
+		<h3>I tipi delle funzioni</h3>
+		<pre><code data-trim class="hljs haskell">
+raddoppia :: Int -> Int
+raddoppia x = x*2
+
+sommaDoppi :: Int -> Int -> Int
+sommaDoppi x y = raddoppia x + raddoppia y
+
+--
+		</code></pre>
+	</section>
+	<section>
+		<h3>Polimorfismo</h3>
+		<pre><code data-trim class="hljs haskell">
+ripeti :: a -> [a]
+ripeti a = a:(ripeti a)
 		</code></pre>
 	</section>
 </section>
@@ -168,8 +296,7 @@ foldl f accum (testa:coda) = _
 <!-- Programmazione reattiva -->
 <section>
 	<h2>Programmazione reattiva</h2>
-	<p>Definizione brutale qui</p>
-	<a href="https://en.wikipedia.org/wiki/Functional_reactive_programming">Per adesso ecco un link a wikipedia</a>
+	<p>La programmazione reattiva si basa sui flussi di dati e sulla propagazione dei cambiamenti</p>
 </section>
 <section>
 	<section data-background="assets/mario_walking.jpg">
@@ -234,6 +361,10 @@ posizioneIniziale = 0
 posizioneGiocatore :: Int
 posizioneGiocatore = foldl (\accum x -> if x==TastoPremuto then accum+1 else accum) posizioneIniziale inputs
 		</code></pre>
+	</section>
+	<section>
+		<p>Il gioco è una funzione che dagli input (tempo+tasti) produce un disegno</p>
+		<img src="assets/mario.png"></img>
 	</section>
 </section>
 

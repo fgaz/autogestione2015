@@ -49,16 +49,17 @@ stepper (td, k) t = if k then 0 else t + td
 
 main =
   let
-    td = fps 30 --time delta - every 1/30 s
-    spK = Signal.sampleOn td Keyboard.space --user input - space key
-    arrK = Signal.sampleOn td Keyboard.arrows --user input - arrows
-    t = Signal.foldp stepper 0 (combine2 td spK) --time since restart
+    timeDelta = fps 30 --time delta - every 1/30 s
+    spaceKey = Signal.sampleOn timeDelta Keyboard.space --user input - space key
+    arrowsKey = Signal.sampleOn timeDelta Keyboard.arrows --user input - arrows
+    t = Signal.foldp stepper 0 (combine2 timeDelta spaceKey) --time since restart
     t' = Signal.map (\x -> x^1.05) t --speeds up the game
-    tunB = Signal.map tunnelBorders t' --the tunnel borders
-    tun = Signal.map tunnel t' --the whole displayed tunnel
-    player = Signal.foldp movePlayer initialState (combine3 tunB arrK spK) --mmmm... stateful
+    tunBorders = Signal.map tunnelBorders t' --the tunnel borders
+    wholeTun = Signal.map tunnel t' --the whole displayed tunnel
+    tunnelAndInputs = combine3 tunBorders arrowsKey spaceKey
+    player = Signal.foldp movePlayer initialState tunnelAndInputs --mmmm... stateful
   in
-    Signal.map2 campo tun player --drawing function
+    Signal.map2 draw wholeTun player --drawing function
 
 movePlayer (tun,arr,space) player =
   let (x',score') = if player.state==Playing then
@@ -72,7 +73,7 @@ movePlayer (tun,arr,space) player =
        | x' < fst tun || x' > snd tun -> { player | state <- Dead } --death
        | otherwise -> { player | x <- x', score <- score' } --playing
 
-campo tun player = collage larghezzaGioco 400 (
+draw tun player = collage larghezzaGioco 400 (
     [ filled black (rect 400 400) --background color
     , toForm (image 400 400 "stars.png") --stars
     , moveY (-200) tun --the tunnel
@@ -125,8 +126,9 @@ toRects (x1,x2) =
 --returns the tunnel borders in a given time
 tunnelBorders : Time -> TunnelPiece
 tunnelBorders n = let grandezzaTunnel = max ((30000-n)/100) minGrandezzaTunnel
-                      posizioneCentrale = (tunnelFunction n) *((larghezzaGioco/2)-grandezzaTunnel/2) in
-    (posizioneCentrale-(grandezzaTunnel/2),posizioneCentrale+(grandezzaTunnel/2))
+                      posizioneCentrale = (tunnelFunction n) *((larghezzaGioco/2)-grandezzaTunnel/2)
+                  in
+                      (posizioneCentrale-(grandezzaTunnel/2), posizioneCentrale+(grandezzaTunnel/2))
 
 --must return a number from -1 to 1
 tunnelFunction x' = let x = x'/400 in
